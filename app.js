@@ -4,6 +4,7 @@ const app =express();
 const cors = require("cors");
 
 const mongoose = require("mongoose");
+const { json } = require("express");
 
 // middle ware 
 app.use(express.json());
@@ -33,7 +34,7 @@ const productSchema=mongoose.Schema({
         type:String,
         required:true,
         enum:{
-            value:['kg,liter,pcs'],
+            values:['kg','pcs','liter'],
             message:`Unit value can't be {VALUE} ,must be kg/liter/pcs`,
         }
     },
@@ -59,7 +60,7 @@ const productSchema=mongoose.Schema({
     status:{
         type:String,
         enum:{
-            value:['in-stock','out-of-stock','delivered'],
+            values:['in-stock','out-of-stock','delivered'],
             message:"Status can be {VALUE} ",
         }
     },
@@ -89,11 +90,62 @@ const productSchema=mongoose.Schema({
 },{
     timestamps:true,
 
-})
+});
+
+
+// SCHEMA => MODEL => QUERY
+
+const Product=mongoose.model('Product',productSchema);
 
 
 app.get("/",(req,res)=>{
     res.send("Route is working");
+})
+
+
+
+app.post('/api/v1/product',async(req,res,next)=>{
+
+
+    try{
+
+        // // save  system
+
+        const product = new Product(req.body);
+
+
+        
+
+        // intanace create => do some thing => save()
+
+        
+        if(product.quantity==0){
+            product.status='out-of-stock'
+        }
+        const result=await product.save();
+        // create system
+        // const result =await Product.create(req.body);
+
+
+     
+         res.status(200).json({
+             status:'success',
+             message:"Product internted successfully",
+             data:result
+     
+         });
+
+    }catch(error){
+
+res.status(400).json({
+    status:'failed',
+    message:"Product is not insetred",
+    error:error.message,
+})
+
+    }
+   
+   
 })
 
 module.exports=app;
