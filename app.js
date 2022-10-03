@@ -93,6 +93,23 @@ const productSchema=mongoose.Schema({
 });
 
 
+// mongoose middleware for saving data : pre/post
+
+productSchema.pre('save',function(next){
+    console.log("before save data");
+    console.log(this)
+    next();
+});
+
+
+productSchema.post('save',function(doc,next){
+console.log("after save data");
+next();
+})
+
+
+
+
 // SCHEMA => MODEL => QUERY
 
 const Product=mongoose.model('Product',productSchema);
