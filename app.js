@@ -98,21 +98,33 @@ const productSchema=mongoose.Schema({
 productSchema.pre('save',function(next){
     console.log("before save data");
     console.log(this)
+
+    if(this.quantity ==0){
+    this.status =='out-of-stock'
+    }
+
     next();
 });
 
 
-productSchema.post('save',function(doc,next){
-console.log("after save data");
-next();
-})
+// productSchema.post('save',function(doc,next){
+// console.log("after save data");
+// next();
+// })
 
+
+productSchema.methods.logger=function(){
+    console.log(`Data save ${this.name}`);
+};
 
 
 
 // SCHEMA => MODEL => QUERY
 
-const Product=mongoose.model('Product',productSchema);
+const Product = mongoose.model('Product', productSchema);
+
+
+
 
 
 app.get("/",(req,res)=>{
@@ -120,7 +132,7 @@ app.get("/",(req,res)=>{
 })
 
 
-
+// add new product
 app.post('/api/v1/product',async(req,res,next)=>{
 
 
@@ -163,6 +175,36 @@ res.status(400).json({
     }
    
    
+});
+
+// get product
+
+app.get('/api/v1/product',async(req,res,next)=>{
+    try {
+
+        // const getProduct = await Product.find({ $or: [{ _id: "633ae0d9796c99ae39ffcda0" }, { status: "in-stock1" }] });
+        // const getProduct = await Product.find({ status: { $ne: "in-stock" } });
+        // const getProduct = await Product.find({ unit: "kg" });
+        // const getProduct = await Product.find({ name: { $in: ['chal','dal']} });
+        // projection
+
+        // const getProduct = await Product.find({}, '-name -quantity');
+        // const getProduct = await Product.find({}).sort({quantity:1}).select({name:-1});
+
+        // const getProduct = await Product.where('name').equals('chal').where("price").gt(99);
+
+        
+        res.status(200).json(getProduct);
+        
+    } catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            message: "Did not get data",
+            error:error.message,
+            
+        })
+    }
+    
 })
 
 module.exports=app;
