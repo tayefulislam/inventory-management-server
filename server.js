@@ -5,7 +5,7 @@ const app = require("./app");
 
 // server
 const port = process.env.PORT || 5000;
-const uri = process.env.URI;
+const uri = process.env.URI||process.env.LOCAL; // hello
 
 
 //database connection
