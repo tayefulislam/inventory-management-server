@@ -44,7 +44,7 @@ exports.saveProductService = async (data) => {
 exports.updateProductService = async (productId, data) => {
     console.log(data)
 
-    const result = await Product.updateOne({ _id: ObjectId(productId) },{$inc:data}, { runValidators: true });
+    const result = await Product.updateOne({ _id: productId },{$set:data}, { runValidators: true });
     
 
     // const product =await Product.findById(productId);
