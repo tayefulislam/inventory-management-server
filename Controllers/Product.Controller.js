@@ -1,12 +1,13 @@
 
 const Product = require("../models/Products");
+const { saveProductService, getProductService } = require("../Services/product.services");
 
 exports.saveProduct = async (req, res, next) => {
 
 
     try {
 
-        // // save  system
+      /*  // // save  system
 
         const product = new Product(req.body);
 
@@ -21,8 +22,10 @@ exports.saveProduct = async (req, res, next) => {
         }
         const result = await product.save();
         // create system
-        // const result =await Product.create(req.body);
-
+        // const result =await Product.create(req.body); 
+        */
+        // use services system
+     const result =await saveProductService(req.body)
 
      
         res.status(200).json({
@@ -61,7 +64,7 @@ exports.getProducts = async (req, res, next) => {
 
         // const getProduct = await Product.where('name').equals('chal').where("price").gt(99);
 
-        const getProduct = await Product.find({ status: "in-stock" });
+        const getProduct =await getProductService();
 
         
         res.status(200).json(getProduct);
