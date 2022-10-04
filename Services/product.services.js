@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const Product = require("../models/Products");
 
 
@@ -36,6 +37,20 @@ exports.saveProductService = async (data) => {
     // create system
     // const result =await Product.create(req.body);
 
+    return result;
+    
+}
+
+exports.updateProductService = async (productId, data) => {
+    console.log(data)
+
+    const result = await Product.updateOne({ _id: ObjectId(productId) },{$inc:data}, { runValidators: true });
+    
+
+    // const product =await Product.findById(productId);
+    // const result = await product.set({data}).save();
+    // console.log(result)
+    
     return result;
     
 }
