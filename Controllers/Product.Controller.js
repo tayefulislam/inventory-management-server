@@ -1,6 +1,6 @@
 
 const Product = require("../models/Products");
-const { saveProductService, getProductService, updateProductService } = require("../Services/product.services");
+const { saveProductService, getProductService, updateProductService, blukUpdateProductService } = require("../Services/product.services");
 
 exports.saveProduct = async (req, res, next) => {
 
@@ -97,5 +97,27 @@ exports.updateProduct = async (req, res, next) => {
             message: "Could't updaate",
             error:error.message,
         })
+    }
+}
+
+
+exports.blukProductUpdate = async (req, res, next) => {
+    console.log(req.body)
+    
+    try {
+
+        const result = await blukUpdateProductService(req.body);
+        res.status(200).json({
+            status: "success",
+            message:"bluk update successful"
+        })
+     }
+    catch (error) {
+        res.status(400).json({
+            status: "fail",
+            message: "could not bluk update successful",
+            error:error.message
+        })
+        
     }
 }

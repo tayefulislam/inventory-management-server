@@ -6,8 +6,11 @@ router.route('/')
     .get(productController.getProducts)
     .post(productController.saveProduct);
 
-router.route("/:id").patch(productController.updateProduct);
-
+router.route("/bluk-update")
+    .patch(productController.blukProductUpdate);
+    
+router.route("/:id")
+    .patch(productController.updateProduct);
 
 
 module.exports = router;
