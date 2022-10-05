@@ -3,8 +3,9 @@ const Product = require("../models/Products");
 
 
 
-
-exports.getProductService = () => {
+/*
+exports.getProductService = (query) => {
+    console.log(query);
     // const getProduct = await Product.find({ $or: [{ _id: "633ae0d9796c99ae39ffcda0" }, { status: "in-stock1" }] });
 
         // const getProduct = await Product.find({ status: { $ne: "in-stock" } });
@@ -16,10 +17,42 @@ exports.getProductService = () => {
         // const getProduct = await Product.find({}).sort({quantity:1}).select({name:-1});
 
         // const getProduct = await Product.where('name').equals('chal').where("price").gt(99);
+    
+    const filters = { ...query };
 
-    const getProduct = Product.find({ });
+    const excludedFields = ["sort", "page", "limit"];
+
+    excludedFields.forEach(field => {
+        // console.log(field);
+        delete filters[field]
+    });
+
+    console.log(query);
+    console.log(filters);
+
+
+    const getProduct = Product.find(filters);
 
     return getProduct;
+    
+
+}
+
+*/
+
+exports.getProductService = (query) => {
+    console.log(query);   
+    const filters = { ...query };
+    const excludedFields = ["sort", "page", "limit"];
+    excludedFields.forEach(field => {
+        // console.log(field);
+        delete filters[field]
+    });
+
+    console.log(query);
+    console.log(filters);
+    const getProduct = Product.find({}).sort({"_id":1});
+   return getProduct;
     
 
 }

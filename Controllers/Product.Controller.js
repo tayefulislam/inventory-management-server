@@ -93,7 +93,7 @@ exports.getProducts = async (req, res, next) => {
 
         // const getProduct = await Product.where('name').equals('chal').where("price").gt(99);
 
-        const getProduct =await getProductService();
+        const getProduct =await getProductService(req.query);
 
         
         res.status(200).json(getProduct);
