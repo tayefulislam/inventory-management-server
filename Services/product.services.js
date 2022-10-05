@@ -17,7 +17,7 @@ exports.getProductService = () => {
 
         // const getProduct = await Product.where('name').equals('chal').where("price").gt(99);
 
-    const getProduct = Product.find({ status: "in-stock" });
+    const getProduct = Product.find({ });
 
     return getProduct;
     

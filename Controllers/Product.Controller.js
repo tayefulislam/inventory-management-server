@@ -153,11 +153,20 @@ exports.blukDeleteProductByIds = async (req, res, next) => {
 
         console.log(req.body)
         const result = await blukDeleteProductByIdsService(req.body.ids);
+
+
+        if (!result.deletedCount) {
+            return res.status(400).json({
+                status: "failed",
+                message: `Total Item :${req.body.ids.length} ,Delete Item ${result.deletedCount}, Not delete  ${req.body.ids.length-result.deletedCount}`,
+                data:result
+            })
+        }
         
 
         res.status(200).json({
             status: "success",
-            message: "DELETE SUCCESSFUL items",
+            message: `Total Item :${req.body.ids.length} ,Delete Item ${result.deletedCount}, Not delete  ${req.body.ids.length-result.deletedCount}`,
             data: result,
         })
 
