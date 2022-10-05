@@ -58,6 +58,19 @@ exports.updateProductService = async (productId, data) => {
 
 exports.blukUpdateProductService = async (data) => {
 
-    const result =await Product.updateMany({ _id: data.ids }, data.data, { runValidators: true });
+    // const result = await Product.updateMany({ _id: data.ids }, data.data, { runValidators: true });
+
+    const products = [];
+
+    data.products.forEach((product) => {
+        products.push(Product.updateOne({ _id: product.id }, product.data));
+    });
+    console.log(products);
+    
+    const result = await Promise.all(products);
+    console.log(result)
+    
+
+
     return result;
 }
