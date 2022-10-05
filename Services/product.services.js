@@ -41,6 +41,14 @@ exports.saveProductService = async (data) => {
     
 }
 
+
+exports.insertBlukProductService = async(data) => {
+
+    const result = await Product.insertMany(data);
+    return result;
+
+}
+
 exports.updateProductService = async (productId, data) => {
     console.log(data)
 
@@ -86,7 +94,8 @@ exports.deleteProductByIdService = async (id) => {
 
 exports.blukDeleteProductByIdsService = async (ids) => {
     
-    const result = await Product.deleteMany({ _id: ids });
+    // const result = await Product.deleteMany({ _id: ids });
+    const result = await Product.deleteMany();
     console.log(result);
     return result;
     

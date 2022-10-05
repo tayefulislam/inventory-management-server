@@ -1,6 +1,6 @@
 
 const Product = require("../models/Products");
-const { saveProductService, getProductService, updateProductService, blukUpdateProductService, deleteProductByIdService, blukDeleteProductByIdsService } = require("../Services/product.services");
+const { saveProductService, getProductService, updateProductService, blukUpdateProductService, deleteProductByIdService, blukDeleteProductByIdsService, insertBlukProductService } = require("../Services/product.services");
 
 exports.saveProduct = async (req, res, next) => {
 
@@ -47,6 +47,35 @@ exports.saveProduct = async (req, res, next) => {
    
    
 };
+
+exports.blukProductInsert = async (req, res, next) => {
+
+
+    try {
+
+     const result =await insertBlukProductService(req.body)
+
+     
+        res.status(200).json({
+            status: 'success',
+            message: "Items inserted successfully",
+            data: result
+     
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+            status: 'failed',
+            message: "Product is not insetred",
+            error: error.message,
+        })
+
+    }
+   
+   
+};
+
 
 
 exports.getProducts = async (req, res, next) => {
@@ -158,7 +187,7 @@ exports.blukDeleteProductByIds = async (req, res, next) => {
         if (!result.deletedCount) {
             return res.status(400).json({
                 status: "failed",
-                message: `Total Item :${req.body.ids.length} ,Delete Item ${result.deletedCount}, Not delete  ${req.body.ids.length-result.deletedCount}`,
+                message: `Total Item :${req?.body?.ids?.length || 0} ,Delete Item ${result.deletedCount}, Not delete  ${req?.body?.ids?.length || 0-result.deletedCount}`,
                 data:result
             })
         }
@@ -166,7 +195,7 @@ exports.blukDeleteProductByIds = async (req, res, next) => {
 
         res.status(200).json({
             status: "success",
-            message: `Total Item :${req.body.ids.length} ,Delete Item ${result.deletedCount}, Not delete  ${req.body.ids.length-result.deletedCount}`,
+            message: `Total Item :${req?.body?.ids?.length || 0} ,Delete Item ${result.deletedCount}, ${!result.deletedCount&& `Not delete  ${req?.body?.ids?.length || 0-result.deletedCount}`}`,
             data: result,
         })
 
