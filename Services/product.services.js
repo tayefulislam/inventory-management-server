@@ -74,3 +74,20 @@ exports.blukUpdateProductService = async (data) => {
 
     return result;
 }
+
+
+exports.deleteProductByIdService = async (id) => {
+
+    const result = await Product.deleteOne({ _id: id });
+    return result;
+    
+}
+
+
+exports.blukDeleteProductByIdsService = async (ids) => {
+    
+    const result = await Product.deleteMany({ _id: ids });
+    console.log(result);
+    return result;
+    
+}

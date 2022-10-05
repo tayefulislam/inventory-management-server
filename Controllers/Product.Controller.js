@@ -1,6 +1,6 @@
 
 const Product = require("../models/Products");
-const { saveProductService, getProductService, updateProductService, blukUpdateProductService } = require("../Services/product.services");
+const { saveProductService, getProductService, updateProductService, blukUpdateProductService, deleteProductByIdService, blukDeleteProductByIdsService } = require("../Services/product.services");
 
 exports.saveProduct = async (req, res, next) => {
 
@@ -121,3 +121,55 @@ exports.blukProductUpdate = async (req, res, next) => {
         
     }
 }
+
+
+
+exports.deleteProductById = async (req, res, next) => {
+    try {
+
+        const { id } = req.params;
+        
+        const result = await deleteProductByIdService(id);
+
+        res.status(200).json({
+            status: "success",
+            message: "DELETE SUCCESSFUL",
+            data: result,
+        })
+
+        
+    }
+    catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            message: "DELETE ACTION NOT SUCCESSFUL",
+            error:error.message
+        })
+}
+}
+
+exports.blukDeleteProductByIds = async (req, res, next) => {
+    try {
+
+        console.log(req.body)
+        const result = await blukDeleteProductByIdsService(req.body.ids);
+        
+
+        res.status(200).json({
+            status: "success",
+            message: "DELETE SUCCESSFUL items",
+            data: result,
+        })
+
+        
+    }
+    catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            message: "DELETE ACTION NOT SUCCESSFUL",
+            error:error.message
+        })
+}
+}
+
+
