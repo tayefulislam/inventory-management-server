@@ -1,8 +1,6 @@
 const { ObjectId } = require("mongodb");
 const Product = require("../models/Products");
 
-
-
 /*
 exports.getProductService = (query) => {
     console.log(query);
@@ -40,89 +38,73 @@ exports.getProductService = (query) => {
 
 */
 
-exports.getProductService = (filters,queries) => {
-    
-
-    
-    const getProduct = Product.find({}).sort(queries.sortBy);
-   return getProduct;
-    
-
-}
-
+exports.getProductService = (filters, queries) => {
+  console.log(queries.fields);
+  const getProduct = Product.find({})
+    .select(queries.fields)
+    .sort(queries.sortBy);
+  return getProduct;
+};
 
 exports.saveProductService = async (data) => {
-    
-    // // save  system
-    const product = new Product(data);
-    // intanace create => do some thing => save()  
-    if (product.quantity == 0) {
-        product.status = 'out-of-stock'
-    }
-    const result = await product.save();
-    // create system
-    // const result =await Product.create(req.body);
+  // // save  system
+  const product = new Product(data);
+  // intanace create => do some thing => save()
+  if (product.quantity == 0) {
+    product.status = "out-of-stock";
+  }
+  const result = await product.save();
+  // create system
+  // const result =await Product.create(req.body);
 
-    return result;
-    
-}
+  return result;
+};
 
-
-exports.insertBlukProductService = async(data) => {
-
-    const result = await Product.insertMany(data);
-    return result;
-
-}
+exports.insertBlukProductService = async (data) => {
+  const result = await Product.insertMany(data);
+  return result;
+};
 
 exports.updateProductService = async (productId, data) => {
-    console.log(data)
+  console.log(data);
 
-    const result = await Product.updateOne({ _id: productId },{$set:data}, { runValidators: true });
-    
+  const result = await Product.updateOne(
+    { _id: productId },
+    { $set: data },
+    { runValidators: true }
+  );
 
-    // const product =await Product.findById(productId);
-    // const result = await product.set({data}).save();
-    // console.log(result)
-    
-    return result;
-    
-}
+  // const product =await Product.findById(productId);
+  // const result = await product.set({data}).save();
+  // console.log(result)
 
+  return result;
+};
 
 exports.blukUpdateProductService = async (data) => {
+  // const result = await Product.updateMany({ _id: data.ids }, data.data, { runValidators: true });
 
-    // const result = await Product.updateMany({ _id: data.ids }, data.data, { runValidators: true });
+  const products = [];
 
-    const products = [];
+  data.products.forEach((product) => {
+    products.push(Product.updateOne({ _id: product.id }, product.data));
+  });
+  console.log(products);
 
-    data.products.forEach((product) => {
-        products.push(Product.updateOne({ _id: product.id }, product.data));
-    });
-    console.log(products);
-    
-    const result = await Promise.all(products);
-    console.log(result)
-    
+  const result = await Promise.all(products);
+  console.log(result);
 
-
-    return result;
-}
-
+  return result;
+};
 
 exports.deleteProductByIdService = async (id) => {
-
-    const result = await Product.deleteOne({ _id: id });
-    return result;
-    
-}
-
+  const result = await Product.deleteOne({ _id: id });
+  return result;
+};
 
 exports.blukDeleteProductByIdsService = async (ids) => {
-    
-    // const result = await Product.deleteMany({ _id: ids });
-    const result = await Product.deleteMany();
-    console.log(result);
-    return result;
-    
-}
+  // const result = await Product.deleteMany({ _id: ids });
+  const result = await Product.deleteMany();
+  console.log(result);
+  return result;
+};
