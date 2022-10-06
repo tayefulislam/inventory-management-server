@@ -93,7 +93,29 @@ exports.getProducts = async (req, res, next) => {
 
         // const getProduct = await Product.where('name').equals('chal').where("price").gt(99);
 
-        const getProduct =await getProductService(req.query);
+
+        /// filtering
+
+    console.log(req.query);   
+    const filters = { ...req.query};
+    const excludedFields = ["sort", "page", "limit"];
+    excludedFields.forEach(field => {
+        // console.log(field);
+        delete filters[field]
+    });
+
+    // console.log(req.query);
+    // console.log(filters);
+
+   const queries = {}
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(" ");
+        queries.sortBy = sortBy;       
+        console.log(sortBy);
+
+    }
+
+        const getProduct =await getProductService(filters,queries);
 
         
         res.status(200).json(getProduct);

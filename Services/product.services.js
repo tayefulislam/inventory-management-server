@@ -40,18 +40,11 @@ exports.getProductService = (query) => {
 
 */
 
-exports.getProductService = (query) => {
-    console.log(query);   
-    const filters = { ...query };
-    const excludedFields = ["sort", "page", "limit"];
-    excludedFields.forEach(field => {
-        // console.log(field);
-        delete filters[field]
-    });
+exports.getProductService = (filters,queries) => {
+    
 
-    console.log(query);
-    console.log(filters);
-    const getProduct = Product.find({}).sort({"_id":1});
+    
+    const getProduct = Product.find({}).sort(queries.sortBy);
    return getProduct;
     
 
