@@ -80,7 +80,8 @@ exports.getProducts = async (req, res, next) => {
     /// filtering
 
     console.log(req.query);
-    const filters = { ...req.query };
+
+    let filters = { ...req.query };
     const excludedFields = ["sort", "page", "limit"];
     excludedFields.forEach((field) => {
       // console.log(field);
@@ -89,6 +90,20 @@ exports.getProducts = async (req, res, next) => {
 
     // console.log(req.query);
     // console.log(filters);
+
+    // gt ,lt,gte,lte
+
+    //  { price: { $gt: 50 } }
+
+    let filterString = JSON.stringify(filters);
+    console.log(filterString);
+    filterString = filterString.replace(
+      /\b(gt|lt|gte|lte)\b/g,
+      (match) => `$${match}`
+    );
+    console.log(JSON.parse(filterString));
+
+    filters = JSON.parse(filterString);
 
     // all queries
     const queries = {};

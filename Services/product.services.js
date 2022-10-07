@@ -40,7 +40,9 @@ exports.getProductService = (query) => {
 
 exports.getProductService = (filters, queries) => {
   console.log(queries.fields);
-  const getProduct = Product.find({})
+
+  // { price: { $gt: 50 } }
+  const getProduct = Product.find(filters)
     .select(queries.fields)
     .sort(queries.sortBy);
   return getProduct;
