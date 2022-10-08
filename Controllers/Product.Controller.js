@@ -123,6 +123,18 @@ exports.getProducts = async (req, res, next) => {
       queries.fields = fields;
     }
 
+    // skip ang limit
+
+    if (req.query.page) {
+      const { page = 0, limit = 10 } = req.query;
+      console.log(page, limit);
+
+      const skip = (page - 1) * parseInt(limit);
+      console.log(skip);
+      queries.skip = skip;
+      queries.limit = limit;
+    }
+
     const getProduct = await getProductService(filters, queries);
 
     res.status(200).json(getProduct);

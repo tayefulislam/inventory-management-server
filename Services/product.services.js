@@ -43,7 +43,9 @@ exports.getProductService = (filters, queries) => {
 
   // { price: { $gt: 50 } }
   const getProduct = Product.find(filters)
+    .skip(queries.skip)
     .select(queries.fields)
+    .limit(queries.limit)
     .sort(queries.sortBy);
   return getProduct;
 };
