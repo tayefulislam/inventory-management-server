@@ -85,16 +85,16 @@ const productSchema=mongoose.Schema({
 
 // mongoose middleware for saving data : pre/post
 
-productSchema.pre('save',function(next){
-    console.log("before save data");
-    console.log(this)
+// productSchema.pre('save',function(next){
+//     console.log("before save data");
+//     console.log(this)
 
-    if(this.quantity ==0){
-    this.status =='out-of-stock'
-    }
+//     if(this.quantity ==0){
+//     this.status =='out-of-stock'
+//     }
 
-    next();
-});
+//     next();
+// });
 
 
 // productSchema.post('save',function(doc,next){
@@ -103,9 +103,9 @@ productSchema.pre('save',function(next){
 // })
 
 
-productSchema.methods.logger=function(){
-    console.log(`Data save ${this.name}`);
-};
+// productSchema.methods.logger=function(){
+//     console.log(`Data save ${this.name}`);
+// };
 
 
 
