@@ -38,14 +38,20 @@ exports.getProductService = (query) => {
 
 */
 
-exports.getProductService = (filters, queries) => {
+exports.getProductService = async (filters, queries) => {
   console.log(queries.fields);
 
   // { price: { $gt: 50 } }
-  const getProduct = Product.find(filters)
+  const getProduct = await Product.find(filters)
+    .skip(queries.skip)
     .select(queries.fields)
+    .limit(queries.limit)
     .sort(queries.sortBy);
-  return getProduct;
+
+  const productCount = await Product.countDocuments(filters);
+  const pageCount = Math.ceil(productCount / queries.limit);
+
+  return { productCount, pageCount, getProduct };
 };
 
 exports.saveProductService = async (data) => {
