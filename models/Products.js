@@ -1,87 +1,69 @@
-
 const mongoose = require("mongoose");
+const validator = require("validator");
+const { ObjectId } = mongoose.Schema.Types;
 
-// schema design 
+// schema design
 
-const productSchema=mongoose.Schema({
-    name:{
-        type:String,
-        required:[true,"Plase enter a name"],
-        trim:true,
-        unique:[true,'name must be unique'],
-        minLength:[3,'enter more than 3 characters'],
-        maxLength:[100,'enter less than 100 characters'],
-
+const productSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Plase enter a name"],
+      trim: true,
+      unique: [true, "name must be unique"],
+      lowercase: true,
+      minLength: [3, "enter more than 3 characters"],
+      maxLength: [100, "enter less than 100 characters"],
     },
-    description:{
-        type:String,
-        required:true
+    description: {
+      type: String,
+      required: true,
     },
-    price:{type:Number,
-        required:true,
-        min:[0,"Price can't be a nagative number"]},
-    unit:{
-        type:String,
-        required:true,
-        enum:{
-            values:['kg','pcs','liter'],
-            message:`Unit value can't be {VALUE} ,must be kg/liter/pcs`,
-        }
-    },
-    quantity:{
-        type:Number,
-        required:true,
-        min:[0,"Qunatity can not be less then 0"],
-        validate:{
-            validator:(value)=>{
-
-                const isInteger = Number.isInteger(value);
-                if(isInteger){
-                    return true;
-                }else{
-                    return false;
-                }
-
+    imageURLs: [
+      {
+        type: String,
+        required: true,
+        validate: {
+          validator: (value) => {
+            if (!Array.isArray(value)) {
+              return false;
             }
+
+            let isValid = true;
+            value.forEach((url) => {
+              if (!validator.isURL(url)) {
+                isValid = false;
+              }
+            });
+            return isValid;
+          },
+          message: "Plase privede valid image url",
         },
-        message:"Quantity must be integer",
+      },
+    ],
 
+    unit: {
+      type: String,
+      required: true,
+      enum: {
+        values: ["kg", "pcs", "liter", "bug"],
+        message: `Unit value can't be {VALUE} ,must be kg/liter/pcs`,
+      },
     },
-    status:{
-        type:String,
-        enum:{
-            values:['in-stock','out-of-stock','delivered'],
-            message:"Status can be {VALUE} ",
-        }
+
+    category: {
+      type: String,
+      required: true,
     },
-
-    // createdAt:{
-    //     type:Date,
-    //     default:Date.now,     
-    // },
-    // updatedAt:{
-    //     type:Date,
-    //     default:Date.now,
-    // },
-   supplier:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"Supplier",
-   },
-
-   categories:[{
-    name:{
-        type:String,
-        required:true,
+    brand: {
+      name: { type: String, required: true },
+      id: { type: ObjectId, ref: "Brand", required: true },
     },
-    _id:mongoose.Schema.Types.ObjectId,
-   }]
-
-
-},{
-    timestamps:true,
-
-});
-
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // mongoose middleware for saving data : pre/post
 
@@ -96,21 +78,17 @@ const productSchema=mongoose.Schema({
 //     next();
 // });
 
-
 // productSchema.post('save',function(doc,next){
 // console.log("after save data");
 // next();
 // })
 
-
 // productSchema.methods.logger=function(){
 //     console.log(`Data save ${this.name}`);
 // };
 
-
-
 // SCHEMA => MODEL => QUERY
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
