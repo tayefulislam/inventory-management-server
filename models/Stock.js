@@ -4,8 +4,13 @@ const { ObjectId } = mongoose.Schema.Types;
 
 // schema design
 
-const productSchema = mongoose.Schema(
+const stockSchema = mongoose.Schema(
   {
+    productId: {
+      type: ObjectId,
+      required: true,
+      ref: "Product",
+    },
     name: {
       type: String,
       required: [true, "Plase enter a name"],
@@ -42,6 +47,18 @@ const productSchema = mongoose.Schema(
       },
     ],
 
+    price: {
+      type: Number,
+      required: true,
+      min: [0, "Product Price can't be nagative"],
+    },
+
+    quantity: {
+      type: Number,
+      required: true,
+      min: [0, "Product Quantity can't be nagative"],
+    },
+
     unit: {
       type: String,
       required: true,
@@ -58,6 +75,45 @@ const productSchema = mongoose.Schema(
     brand: {
       name: { type: String, required: true },
       id: { type: ObjectId, ref: "Brand", required: true },
+    },
+
+    status: {
+      type: String,
+      required: true,
+      enum: {
+        values: ["in-stock", "out-of-stock", "discontinued"],
+        message: "status can't be {VALUE}",
+      },
+    },
+
+    store: {
+      name: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        maxLength: 120,
+        require: [true, "Please provide a store name"],
+        enum: {
+          values: ["dhaka", "chattogram", "khulna", "barishal"],
+          message: "{VALUE} is not valid name",
+        },
+      },
+      id: {
+        type: ObjectId,
+        required: true,
+        ref: "Store",
+      },
+      suppliedBy: {
+        name: {
+          type: String,
+          trim: true,
+          required: [true, "Plase Provide a name"],
+        },
+        id: {
+          type: ObjectId,
+          ref: "Supplier",
+        },
+      },
     },
   },
   {
@@ -89,6 +145,6 @@ const productSchema = mongoose.Schema(
 
 // SCHEMA => MODEL => QUERY
 
-const Product = mongoose.model("Product", productSchema);
+const Stock = mongoose.model("Stock", stockSchema);
 
-module.exports = Product;
+module.exports = Stock;
