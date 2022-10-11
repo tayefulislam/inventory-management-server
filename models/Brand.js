@@ -19,7 +19,7 @@ const BrandSchema = mongoose.Schema(
     },
     website: {
       type: String,
-      validate: [validator.isUrl, "please enter a valid url"],
+      validate: [validator.isURL, "please enter a valid url"],
     },
     location: String,
     products: [
@@ -49,6 +49,6 @@ const BrandSchema = mongoose.Schema(
   }
 );
 
-const Brand = mongoose.model("Brand", BrandSchema);
+const Brand = mongoose.model("Brand", BrandSchema, "Brand");
 
 module.exports = Brand;

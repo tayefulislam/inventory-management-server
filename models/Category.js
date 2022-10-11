@@ -15,7 +15,7 @@ const CategorySchema = mongoose.Schema(
     description: String,
     imageURL: {
       type: String,
-      validate: [validator.isUrl, "Please enter valid address"],
+      validate: [validator.isURL, "Please enter valid address"],
     },
   },
   {
