@@ -65,6 +65,14 @@ exports.updateStoreById = async (req, res, next) => {
     const { id } = req.params;
     const updateStore = await updateStoreByIdService(id, req.body);
 
+    if (!updateStore.modifiedCount) {
+      res.status(400).json({
+        status: "failed",
+        message: "Failed to Store Updated by Id",
+        error: error.message,
+      });
+    }
+
     res.status(200).json({
       status: "success",
       message: "Successfully Store Updated by Id",
