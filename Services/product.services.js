@@ -127,3 +127,9 @@ exports.blukDeleteProductByIdsService = async (ids) => {
   console.log(result);
   return result;
 };
+
+// file upload
+
+// exports.fileUploadService = async () => {
+
+// }
