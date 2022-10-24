@@ -105,6 +105,6 @@ const SupplierSchema = mongoose.Schema(
   }
 );
 
-const Supplier = mongoose.model("Suppliers", SupplierSchema);
+const Supplier = mongoose.model("Supplier", SupplierSchema);
 
 module.exports = Supplier;

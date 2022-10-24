@@ -1,5 +1,3 @@
-const { ObjectId } = require("mongodb");
-const Brand = require("../models/Brand");
 const Stock = require("../models/Stock");
 
 exports.getStockService = async (filters, queries) => {
@@ -18,10 +16,19 @@ exports.getStockService = async (filters, queries) => {
   return { StockCount, pageCount, stocks };
 };
 
+exports.getStockByIdService = async (id) => {
+  console.log(id);
+  const result = await Stock.findOne({ _id: id })
+    .populate("store.id")
+    .populate("suppliedBy.id")
+    .populate("brand.id");
+  return result;
+};
+
 exports.createStockService = async (data) => {
-  const Stock = await Stock.create(data);
-  console.log(Stock);
-  return Stock;
+  const result = await Stock.create(data);
+  console.log(result);
+  return result;
 };
 
 exports.updateStockService = async (StockId, data) => {

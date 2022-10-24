@@ -48,7 +48,7 @@ const stockSchema = mongoose.Schema(
       type: String,
       required: true,
       enum: {
-        values: ["kg", "pcs", "liter", "bug"],
+        values: ["kg", "pcs", "liter", "bag"],
         message: `Unit value can't be {VALUE} ,must be kg/liter/pcs`,
       },
     },
@@ -88,16 +88,16 @@ const stockSchema = mongoose.Schema(
         required: true,
         ref: "Store",
       },
-      suppliedBy: {
-        name: {
-          type: String,
-          trim: true,
-          required: [true, "Plase Provide a name"],
-        },
-        id: {
-          type: ObjectId,
-          ref: "Supplier",
-        },
+    },
+
+    suppliedBy: {
+      name: {
+        type: String,
+        trim: true,
+      },
+      id: {
+        type: ObjectId,
+        ref: "Supplier",
       },
     },
 

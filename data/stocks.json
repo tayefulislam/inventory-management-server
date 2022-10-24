@@ -1,6 +1,6 @@
 [
     {
-      "productId": "633476cce0259f4febbfc437",
+      "productId": "6356b460e31c55a2d37308de",
       "name": "Pran Chinigura Aromatic Rice - 5kg Bag",
       "description": "Pran Chinigura Aromatic Rice (Polau). Fresh and Clean, Vacuum Packed. Pran Chinigura Rice can be use in Biriyani, Polau, Firni, Kheer, Khichuri.",
       "imageURLs": [
@@ -18,14 +18,17 @@
       },
       "store": {
         "name": "chattogram",
-        "id": "633412b419894112041a9018"
+        "id": "6356b588ebe211125a95b17a"
       },
       "suppliedBy": {
         "name": "mezbaul abedin persian",
-        "id": "63341c683d8c200adc31b6b6"
+        "id": "6356b623a4aa673480d793b7"
       },
       "sellCount": 50
     },
+
+
+
     {
       "productId": "633476cce0259f4febbfc438",
       "name": "Pran Chinigura Aromatic Rice - 50kg",
@@ -43,14 +46,16 @@
       },
       "store": {
         "name": "chattogram",
-        "id": "633412b419894112041a9018"
+        "id": "6356b588ebe211125a95b17a"
       },
       "suppliedBy": {
         "name": "mezbaul abedin persian",
-        "id": "63341c683d8c200adc31b6b6"
+        "id": "6356b623a4aa673480d793b7"
       },
       "sellCount": 10
     },
+
+
     {
       "productId": "633476cce0259f4febbfc439",
       "name": "Pran Nazirshail Rice - 5kg",
@@ -76,8 +81,17 @@
       },
       "sellCount": 90
     },
+
+
+
+
+
+
+
+
+
     {
-      "productId": "633476cce0259f4febbfc43a",
+      "productId": "6347047feb710a8bda31d634",
       "name": "Fresh Chinigura Rice",
       "description": "Fresh Chinigura Rice. Fresh and Clean, Vacuum Packed. Fresh Chinigura Rice can be use in Biriyani, Polau, Firni, Kheer, Khichuri.",
       "imageURLs": [
@@ -86,17 +100,19 @@
       "unit": "kg",
       "price": "357",
       "category": "Rice",
+      "quantity": 300,
+      "status": "in-stock",
       "brand": {
         "name": "Fresh",
-        "id": "6329f32f40244f2a44c85741"
+        "id": "6346d6de3e910303fd7f7ab9"
       },
       "store": {
         "name": "chattogram",
-        "id": "633412b419894112041a9018"
+        "id": "6356b588ebe211125a95b17a"
       },
       "suppliedBy": {
-        "name": "rasel ahmed",
-        "id": "63341cd73d8c200adc31b6bd"
+        "name": "mezbaul abedin persian",
+        "id": "6356b623a4aa673480d793b7"
       },
       "sellCount": 17
     },

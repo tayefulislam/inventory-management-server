@@ -4,6 +4,7 @@ const {
 
   updateStockService,
   deleteStockByIdService,
+  getStockByIdService,
 } = require("../Services/stock.services");
 
 exports.getStocks = async (req, res, next) => {
@@ -64,6 +65,34 @@ exports.getStocks = async (req, res, next) => {
     res.status(400).json({
       status: "fail",
       message: "Did not get data",
+      error: error.message,
+    });
+  }
+};
+
+exports.getStockById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const result = await getStockByIdService(id);
+
+    if (!result) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Can not get stock details with this id",
+        error: error.message,
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Stock details get with this id",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "failed",
+      message: "Can not get stock details",
       error: error.message,
     });
   }
