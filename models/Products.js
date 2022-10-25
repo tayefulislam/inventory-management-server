@@ -23,22 +23,22 @@ const productSchema = mongoose.Schema(
       {
         type: String,
         required: true,
-        validate: {
-          validator: (value) => {
-            if (!Array.isArray(value)) {
-              return false;
-            }
+        // validate: {
+        //   validator: (value) => {
+        //     if (!Array.isArray(value)) {
+        //       return false;
+        //     }
 
-            let isValid = true;
-            value.forEach((url) => {
-              if (!validator.isURL(url)) {
-                isValid = false;
-              }
-            });
-            return isValid;
-          },
-          message: "Plase privede valid image url",
-        },
+        //     let isValid = true;
+        //     value.forEach((url) => {
+        //       if (!validator.isURL(url)) {
+        //         isValid = false;
+        //       }
+        //     });
+        //     return isValid;
+        //   },
+        //   message: "Plase privede valid image url",
+        // },
       },
     ],
 
@@ -46,8 +46,8 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
       enum: {
-        values: ["kg", "pcs", "liter", "bug"],
-        message: `Unit value can't be {VALUE} ,must be kg/liter/pcs`,
+        values: ["kg", "pcs", "liter", "bag"],
+        message: `Unit value can't be {VALUE} ,must be kg/liter/pcs/bag`,
       },
     },
 

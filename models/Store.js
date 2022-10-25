@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
+// const validator = require("validator");
 const { ObjectId } = mongoose.Schema.Types;
 
 const StoreSchema = mongoose.Schema(
@@ -15,6 +15,7 @@ const StoreSchema = mongoose.Schema(
         message: "{VALUE} is not valid name",
       },
     },
+
     description: String,
 
     status: {

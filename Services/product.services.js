@@ -1,4 +1,5 @@
 const { ObjectId } = require("mongodb");
+const Brand = require("../models/Brand");
 const Product = require("../models/Products");
 
 /*
@@ -56,16 +57,26 @@ exports.getProductService = async (filters, queries) => {
 
 exports.saveProductService = async (data) => {
   // // save  system
-  const product = new Product(data);
+  // const product = new Product(data);
   // intanace create => do some thing => save()
-  if (product.quantity == 0) {
-    product.status = "out-of-stock";
-  }
-  const result = await product.save();
+  // if (product.quantity == 0) {
+  //   product.status = "out-of-stock";
+  // }
+  const product = await Product.create(data);
+  console.log(product);
+  const { _id: productId, brand } = product;
+
+  const res = await Brand.updateOne(
+    { _id: brand.id },
+    { $push: { products: productId } }
+  );
+
+  console.log(res);
+
   // create system
   // const result =await Product.create(req.body);
 
-  return result;
+  return product;
 };
 
 exports.insertBlukProductService = async (data) => {
@@ -116,3 +127,9 @@ exports.blukDeleteProductByIdsService = async (ids) => {
   console.log(result);
   return result;
 };
+
+// file upload
+
+// exports.fileUploadService = async () => {
+
+// }

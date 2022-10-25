@@ -233,3 +233,20 @@ exports.blukDeleteProductByIds = async (req, res, next) => {
     });
   }
 };
+
+exports.fileUpload = async (req, res, next) => {
+  try {
+    console.log(res);
+    console.log(res.file);
+
+    const result = res;
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "file don't upload",
+      error: error.message,
+    });
+  }
+};

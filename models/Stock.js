@@ -15,7 +15,7 @@ const stockSchema = mongoose.Schema(
       type: String,
       required: [true, "Plase enter a name"],
       trim: true,
-      unique: [true, "name must be unique"],
+      // unique: [true, "name must be unique"],
       lowercase: true,
       minLength: [3, "enter more than 3 characters"],
       maxLength: [100, "enter less than 100 characters"],
@@ -28,22 +28,7 @@ const stockSchema = mongoose.Schema(
       {
         type: String,
         required: true,
-        validate: {
-          validator: (value) => {
-            if (!Array.isArray(value)) {
-              return false;
-            }
-
-            let isValid = true;
-            value.forEach((url) => {
-              if (!validator.isURL(url)) {
-                isValid = false;
-              }
-            });
-            return isValid;
-          },
-          message: "Plase privede valid image url",
-        },
+        validate: [validator.isURL, "Please privied valid url"],
       },
     ],
 
@@ -63,7 +48,7 @@ const stockSchema = mongoose.Schema(
       type: String,
       required: true,
       enum: {
-        values: ["kg", "pcs", "liter", "bug"],
+        values: ["kg", "pcs", "liter", "bag"],
         message: `Unit value can't be {VALUE} ,must be kg/liter/pcs`,
       },
     },
@@ -103,17 +88,23 @@ const stockSchema = mongoose.Schema(
         required: true,
         ref: "Store",
       },
-      suppliedBy: {
-        name: {
-          type: String,
-          trim: true,
-          required: [true, "Plase Provide a name"],
-        },
-        id: {
-          type: ObjectId,
-          ref: "Supplier",
-        },
+    },
+
+    suppliedBy: {
+      name: {
+        type: String,
+        trim: true,
       },
+      id: {
+        type: ObjectId,
+        ref: "Supplier",
+      },
+    },
+
+    sellCount: {
+      type: Number,
+      default: 0,
+      min: 0,
     },
   },
   {
