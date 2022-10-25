@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const Stock = require("../models/Stock");
 
 exports.getStockService = async (filters, queries) => {
@@ -17,11 +18,32 @@ exports.getStockService = async (filters, queries) => {
 };
 
 exports.getStockByIdService = async (id) => {
-  console.log(id);
-  const result = await Stock.findOne({ _id: id })
-    .populate("store.id")
-    .populate("suppliedBy.id")
-    .populate("brand.id");
+  // console.log(id);
+  // const result = await Stock.findOne({ _id: id })
+  //   .populate("store.id")
+  //   .populate("suppliedBy.id")
+  //   .populate("brand.id");
+
+  const result = await Stock.aggregate([
+    { $match: { _id: ObjectId(id) } },
+    {
+      $project: {
+        name: 1,
+        productId: 1,
+
+        category: 1,
+        "brand.name": { $toLower: "$brand.name" },
+      },
+    },
+    {
+      $lookup: {
+        from: "Brand", // collection name must be given here /ei khane collection name dite hobe
+        localField: "brand.name",
+        foreignField: "name", // collection match korar field ar name diete hobe
+        as: "brandDetails",
+      },
+    },
+  ]);
   return result;
 };
 
